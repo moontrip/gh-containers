@@ -9,19 +9,42 @@ env:
   MONGODB_DB_NAME: gha-demo
 jobs:
   test:
+    # DKDK environment name is the one defined in the corresponding repo > Setting > Environment
     environment: testing
     runs-on: ubuntu-latest
+    # DKDK add container using docker hub's image, node
+    # to have full control for environment
+    container:
+      image: node:20
     env:
-      MONGODB_CONNECTION_PROTOCOL: mongodb+srv
-      MONGODB_CLUSTER_ADDRESS: cluster0.ntrwp.mongodb.net
-      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      # DKDK for accessing mongodb cloud
+      # MONGODB_CONNECTION_PROTOCOL: mongodb+srv
+      # MONGODB_CLUSTER_ADDRESS: cluster0.ntrwp.mongodb.net
+      # MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
+      # MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+
+      # DKDK here, to access service container, mongodb in the following
+      # so al env should match with the container's env
+      MONGODB_CONNECTION_PROTOCOL: mongodb
+      MONGODB_CLUSTER_ADDRESS: mongodb
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: example
       PORT: 8080
+    # DKDK add Service Containers: run a test DB at mongodb
+    services:
+      # DKDK service name, mongodb or anything
+      mongodb:
+        image: mongo
+        env:
+          # DKDK this is stated at Docker hub's mongodb document
+          MONTO_INITDB_ROOT_USERNAME: root
+          MONTO_INITDB_ROOT_PASSWORD: example
+          # PORT: 8080
     steps:
       - name: Get Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ env.CACHE_KEY }}-${{ hashFiles('**/package-lock.json') }}
