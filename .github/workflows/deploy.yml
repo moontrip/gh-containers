@@ -16,8 +16,8 @@ jobs:
     # DKDK add container using docker hub's image, node
     # to have full control for environment
     # by having container, jobs are running at docker container, not at ubuntu-latest
-    container:
-      image: node:20
+    # container:
+    #   image: node:20
     env:
       # DKDK for accessing mongodb cloud
       # MONGODB_CONNECTION_PROTOCOL: mongodb+srv
@@ -31,7 +31,8 @@ jobs:
       MONGODB_CONNECTION_PROTOCOL: mongodb
       # if not using node:20 container, then MONGODB_CLUSTER_ADDRESS should be changed
       # e.g., MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017
-      MONGODB_CLUSTER_ADDRESS: mongodb
+      # MONGODB_CLUSTER_ADDRESS: mongodb
+      MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: example
       PORT: 8080
@@ -41,8 +42,8 @@ jobs:
       mongodb:
         image: mongo
         # DKDK if service container is not running under container (node:20), then ports should be defined
-        # ports:
-        #   - 27017:27017
+        ports:
+          - 27017:27017
         env:
           # DKDK this is stated at Docker hub's mongodb document
           MONTO_INITDB_ROOT_USERNAME: root
