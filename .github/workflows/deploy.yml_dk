@@ -65,9 +65,9 @@ jobs:
         # DKDK does npx work???
         # DKDK just in case, change $port to other variable
         # DKDK for whatever reason, npx wait-on does not work...
-        # run: npm start & npx wait-on http://127.0.0.1:$PORT # requires MongoDB Atlas to accept requests from anywhere!
+        run: npm start & npx wait-on http://127.0.0.1:$PORT # requires MongoDB Atlas to accept requests from anywhere!
         # run: npm start & npx wait-on http://127.0.0.1:8080
-        run: npm start
+        # run: npm start  # DKDK this throws error
       - name: Run tests
         run: npm test
       - name: Output information
