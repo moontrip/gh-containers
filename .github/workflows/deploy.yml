@@ -47,8 +47,8 @@ jobs:
           - 27017:27017
         env:
           # DKDK this is stated at Docker hub's mongodb document
-          MONTO_INITDB_ROOT_USERNAME: root
-          MONTO_INITDB_ROOT_PASSWORD: example
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
           # PORT: 8080
     steps:
       - name: Get Code
